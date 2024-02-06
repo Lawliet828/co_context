@@ -69,6 +69,8 @@ class [[nodiscard]] io_context final {
     // should io_context stop
     bool will_stop = false;
 
+    ::std::string name = "io_context";
+
     /**
      * ---------------------------------------------------
      * read-only sharing data (No data)
@@ -116,6 +118,13 @@ class [[nodiscard]] io_context final {
 
     // start a standalone thread to run.
     void start();
+
+    void set_name(const char *name) noexcept {
+        this->name = name;
+    }
+    void set_name(const std::string &name) noexcept {
+        this->name = name;
+    }
 
     void join() {
         if (host_thread.joinable()) {

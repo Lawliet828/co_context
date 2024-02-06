@@ -10,7 +10,7 @@
 namespace co_context {
 
 counting_semaphore::~counting_semaphore() noexcept {
-    if constexpr (config::is_log_d) {
+    if (config::is_log_d) {
         if (awaiting.load(std::memory_order_relaxed) != nullptr
             || to_resume != nullptr) {
             log::d("[WARNING] ~counting_semaphore(): coroutine leak\n");

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include <co_context/config/io_context.hpp>
 #include <co_context/detail/uring_type.hpp>
 
@@ -19,6 +21,7 @@ struct alignas(config::cache_line_size) thread_meta {
     worker_meta *worker = nullptr; // ctx + offset = worker
 
     config::ctx_id_t ctx_id = static_cast<config::ctx_id_t>(-1);
+    ::std::string name;
 };
 
 extern thread_local thread_meta this_thread; // NOLINT(*global-variables)

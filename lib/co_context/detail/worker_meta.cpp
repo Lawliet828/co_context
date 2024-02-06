@@ -264,7 +264,7 @@ void worker_meta::handle_co_spawn_events() noexcept {
         std::terminate();
     }
 
-    if constexpr (config::is_log_w) {
+    if (config::is_log_w) {
         const size_t warning_level = overflow_level / 4 * 3;
         if (warning_level <= num) [[unlikely]] {
             log::w(

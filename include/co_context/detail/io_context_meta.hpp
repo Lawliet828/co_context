@@ -21,8 +21,8 @@ namespace detail {
 namespace co_context::detail {
 
 struct io_context_meta_type {
-    std::mutex mtx;
-    std::condition_variable cv;
+    ::std::mutex mtx;
+    ::std::condition_variable cv;
     config::ctx_id_t create_count; // Do not initialize this
     config::ctx_id_t ready_count;  // Do not initialize this
 };

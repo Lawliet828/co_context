@@ -10,6 +10,7 @@
 #include <co_context/io_context.hpp>
 #include <co_context/log/log.hpp>
 
+#include <sys/prctl.h>
 #include <unistd.h>
 
 #include <cassert>
@@ -24,6 +25,7 @@ namespace co_context {
 void io_context::init() {
     detail::this_thread.ctx = this;
     detail::this_thread.ctx_id = this->id;
+    detail::this_thread.name = this->name;
 
     this->worker.init(config::default_io_uring_entries);
 }
@@ -48,6 +50,8 @@ void io_context::deinit() noexcept {
 void io_context::start() {
     host_thread = std::thread{[this] {
         this->init();
+        log::d("thread name is %s\n", detail::this_thread.name.c_str());
+        ::prctl(PR_SET_NAME, detail::this_thread.name.c_str());
         auto &meta = detail::io_context_meta;
         {
             std::unique_lock lock{meta.mtx};
